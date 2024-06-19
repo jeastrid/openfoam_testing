@@ -1,0 +1,37 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+mkdir -p constant/triSurface
+
+cp -f \
+    "$FOAM_TUTORIALS"/resources/geometry/motorBike.obj.gz \
+    constant/triSurface/
+
+runApplication surfaceFeatureExtract
+
+runApplication blockMesh
+
+runApplication snappyHexMesh -overwrite
+
+runApplication topoSet
+
+restore0Dir
+
+runApplication patchSummary
+
+decompDict="-decomposeParDict system/decomposeParDict.2"
+runApplication $decompDict decomposePar
+
+runParallel $decompDict potentialFoam -writephi
+
+runParallel $decompDict checkMesh -writeFields '(nonOrthoAngle)' -constant
+
+runParallel $decompDict $(getApplication)
+
+runApplication reconstructParMesh -constant
+
+runApplication reconstructPar -latestTime
+
+#------------------------------------------------------------------------------
