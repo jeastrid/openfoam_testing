@@ -5,10 +5,23 @@
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
-
-cuttingPlane
+FoamFile
 {
-    type symmetry;
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      decomposeParDict;
 }
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+numberOfSubdomains 6;
+
+method          simple;
+
+coeffs
+{
+    n           (2 3 1);
+}
+
 
 // ************************************************************************* //

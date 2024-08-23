@@ -1,0 +1,45 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+# settings
+
+    # flag to enable computations in parallel mode
+    parallel=false
+
+
+#------------------------------------------------------------------------------
+
+restore0Dir
+
+[ -d constant/polyMesh ] || cp -rf ../polyMesh_ellipse/ constant/polyMesh/
+
+runApplication renumberMesh -overwrite -dict system/renumberMeshDict
+
+# runApplication checkMesh -allGeometry -allTopology
+
+if [ "$parallel" = true ]
+then
+
+    runApplication decomposePar
+
+    # runParallel potentialFoam -withFunctionObjects -writePhi -writephi -writep
+
+    runParallel $(getApplication)
+
+    runApplication reconstructPar -withZero
+
+else
+
+    # runApplication potentialFoam -withFunctionObjects -writePhi -writephi -writep
+
+    runApplication $(getApplication)
+
+fi
+
+# python3 plot_forces.py
+
+# pyFoamPlotWatcher.py --implementation=matplotlib --hardcopy --format-of-hardcopy=pdf log.pimpleFoam
+
+#------------------------------------------------------------------------------

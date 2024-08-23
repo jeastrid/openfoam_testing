@@ -1,0 +1,20 @@
+forces
+{
+    type          forces;
+    libs          (forces);
+
+    writeControl  timeStep;
+    timeInterval  1;
+
+    log           yes;
+
+    patches       (cylinder);
+    rho           rhoInf;     // Indicates incompressible
+    rhoInf        1000;       // Redundant for incompressible
+
+    CofR          (0 0 0);    // position of CB in intertial frame at start
+    // pitchAxis     (0 0 1);
+
+    // U             U:Transformed;
+    // p             p;
+}

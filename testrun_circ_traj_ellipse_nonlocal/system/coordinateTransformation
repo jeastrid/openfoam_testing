@@ -1,0 +1,32 @@
+coordinateTransformation
+{
+    // Mandatory entries (unmodifiable)
+    type            fieldCoordinateSystemTransform;
+    libs            (fieldFunctionObjects);
+
+    // Mandatory entries (runtime modifiable)
+    fields          (U);
+    coordinateSystem
+    {
+        origin          (0 -20 0);
+        rotation
+        {
+            type            axes;
+            e3              (0 0 1);
+            e1              (1 0 0);
+        }
+    }
+
+    // Optional (inherited) entries
+    // region          region0;
+    // enabled         true;
+    // log             true;
+    // timeStart       0;
+    // timeEnd         1000;
+    // executeControl  timeStep;
+    // executeInterval 1;
+    // writeControl    timeStep;
+    // writeInterval   1;
+    executeControl  timeStep;
+    writeControl    writeTime;
+}

@@ -1,0 +1,43 @@
+// difference
+// {
+//     type coded;
+//     libs (utilityFunctionObjects);
+// 
+//     // Name of on-the-fly generated functionObject
+//     name writeLocalCoordSys;
+//     codeWrite
+//     #{
+//         auto r = 20.0;
+//         auto pi = 3.141592654;
+//         auto vel = 1.543333333;
+//         auto period = pi * r / vel;
+//         scalar x = 5.0; // r*cos(t);
+//         scalar y = 4.0; // r*(sin(t) - r);
+//         
+//         x.write();
+//         y.write();
+//     #};
+// } 
+
+forces
+{
+    type          localforces;
+    libs          (localforces);
+
+    writeControl  timeStep;
+    timeInterval  1;
+
+    log           yes;
+
+    patches       (cylinder);
+    rho           rhoInf;     // Indicates incompressible
+    rhoInf        1000;       // Redundant for incompressible
+
+    CofR          (0 0 0);    // position of CB in intertial frame at start
+    // pitchAxis     (0 0 1);
+
+    // U             U:Transformed;
+    // p             p;
+}
+
+// ************************************************************************* //

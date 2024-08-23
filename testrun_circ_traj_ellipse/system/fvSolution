@@ -1,0 +1,97 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    "pcorr.*"
+    {
+        solver           GAMG;
+        tolerance        0.02;
+        relTol           0;
+        smoother         DICGaussSeidel;
+    }
+
+    p
+    {
+        $pcorr;
+        tolerance        1e-7;
+        relTol           0.01;
+    }
+
+    pFinal
+    {
+        $p;
+        tolerance        1e-7;
+        relTol           0;
+    }
+
+    "(U|k|omega)"
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-06;
+        relTol          0.1;
+    }
+
+    "(U|k|omega)Final"
+    {
+        $U;
+        tolerance       1e-06;
+        relTol          0;
+    }
+
+    cellDisplacement
+    {
+        solver          GAMG;
+        tolerance       1e-5;
+        relTol          0;
+        smoother        GaussSeidel;
+    }
+}
+
+PIMPLE
+{
+    correctPhi          no;
+    momentumPredictor   yes;
+    nOuterCorrectors    2; // 1 = PISO mode, >1 = PIMPLE mode
+    nCorrectors         3;
+    nNonOrthogonalCorrectors 1;
+    consistent          yes;
+}
+
+// relaxationFactors are unused by PISO
+/*relaxationFactors
+{
+    fields
+    {
+        // p               0.7; // with SIMPLE
+        p               0.95; // with SIMPLEC
+    }
+    equations
+    {
+        // "(U|k|omega)"   0.9; // with SIMPLE
+        "(U|k|omega)"   1.0; // with SIMPLEC
+        "(U|k|omega)Final" 1.0;
+    }
+}/*
+
+cache
+{
+    grad(U);
+}
+
+
+// ************************************************************************* //
