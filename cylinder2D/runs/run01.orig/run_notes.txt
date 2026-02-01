@@ -1,0 +1,12 @@
+- grid: cylinder_snappy (33,824 cells)
+- cylinder diameter = 0.5 m
+- 2 m/s inflow
+- nu = 0.001 m^2/s
+- Re = 1000
+- Turbulence variable BCs/ICs calculated with:
+  - U = 2 m/s
+  - TL = 0.5 m
+  - Tu = 1%
+
+Note: setting nNonOrthogonalCorrectors 1 smooths the pressure residual a bit but
+does not seem to affect convergence

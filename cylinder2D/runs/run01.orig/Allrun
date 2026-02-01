@@ -1,0 +1,22 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+restore0Dir
+
+[ -d constant/polyMesh ] || cp -rf \
+    ../../meshing/cylinder_snappy/1/polyMesh \
+    constant/polyMesh
+
+cp ../../meshing/cylinder_snappy/1/C* constant/
+
+# runApplication $(getApplication)
+
+runApplication decomposePar
+
+runParallel $(getApplication)
+
+runApplication reconstructPar
+
+#------------------------------------------------------------------------------

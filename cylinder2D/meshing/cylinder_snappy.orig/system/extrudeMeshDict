@@ -1,0 +1,30 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      extrudeMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+constructFrom   patch;
+sourceCase      ".";
+
+sourcePatches   (symFront);
+exposedPatchName symBack;
+
+extrudeModel    linearDirection;
+linearDirectionCoeffs
+{
+    direction       (0 0 1);
+    thickness       0.1;
+}
+flipNormals     false;
+nLayers         1;
+expansionRatio  1.0;
+
+mergeFaces      false; // merge front and back? (usually for 360 degree wedges)
+mergeTol        0; // Merge small edges. Fraction of bounding box.
+
+
+// ************************************************************************* //

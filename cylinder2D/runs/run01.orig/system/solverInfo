@@ -1,0 +1,22 @@
+solverInfo
+{
+    type            solverInfo;
+    libs            (utilityFunctionObjects);
+    fields          (U p k omega);
+
+    writeResidualFields false;
+
+    writePrecision  6;
+    writeToFile     false; // in postProcessing/
+    // useUserTime     true;
+
+    region          region0;
+    enabled         true;
+    log             false;
+    // timeStart       0;
+    // timeEnd         1000;
+    executeControl  timeStep;
+    executeInterval 1;
+    writeControl    writeTime;
+    writeInterval   1;
+}

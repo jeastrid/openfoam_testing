@@ -1,0 +1,65 @@
+residualGraph
+{
+    type            graphFunctionObject;
+    libs            (utilityFunctionObjects);
+
+    functions
+    {
+        Ux
+        {
+            object      solverInfo;
+            entry       Ux_initial;
+
+            // title       <string>;
+            // colour      <labelVector>;
+            // dashes      <labelList>;
+        }
+        Uy
+        {
+            object      solverInfo;
+            entry       Uy_initial;
+        }
+        // Uz
+        // {
+        //     object      solverInfo;
+        //     entry       Uz_initial;
+        // }
+        p
+        {
+            object      solverInfo;
+            entry       p_initial;
+        }
+        k
+        {
+            object      solverInfo;
+            entry       k_initial;
+        }
+        omega
+        {
+            object      solverInfo;
+            entry       omega_initial;
+        }
+    }
+
+    logScaleX       false;
+    logScaleY       true;
+    xlabel          "Time";
+    ylabel          "log10(Initial residual)";
+    // xMin            <scalar>;
+    // xMax            <scalar>;
+    // yMin            <scalar>;
+    // yMax            <scalar>;
+    // width           <label>;
+    // height          <label>;
+    // strokeWidth     <label>;
+    drawGrid        false;
+
+    writePrecision  6;
+    writeToFile     true; // in postProcessing/
+    useUserTime     true;
+
+    log             false; // true;
+    executeControl  timeStep;
+    executeInterval 1;
+    writeControl    onEnd; // writeTime;
+}

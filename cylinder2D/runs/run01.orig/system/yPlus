@@ -1,0 +1,10 @@
+yPlus
+{
+    type            yPlus;
+    libs            (fieldFunctionObjects);
+    patches         (cylinder);
+    log             true;
+    executeControl  writeTime;
+    writeControl    writeTime;
+    writePrecision  6;
+}

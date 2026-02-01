@@ -1,0 +1,45 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      omega;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 -1 0 0 0 0];
+
+internalField   uniform 0.049;
+
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;
+        value           $internalField;
+    }
+
+    outlet
+    {
+        type            zeroGradient;
+    }
+
+    topBottom
+    {
+        type            zeroGradient;
+    }
+
+    cylinder
+    {
+        type            omegaWallFunction;
+        value           $internalField;
+    }
+
+    frontBack
+    {
+        type            empty;
+    }
+}
+
+
+// ************************************************************************* //

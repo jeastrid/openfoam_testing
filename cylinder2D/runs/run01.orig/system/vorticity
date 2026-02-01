@@ -1,0 +1,10 @@
+vorticity
+{
+    type            vorticity;
+    libs            (fieldFunctionObjects);
+    field           U;
+    result          curlU;
+    log             true;
+    executeControl  writeTime;
+    writeControl    writeTime;
+}

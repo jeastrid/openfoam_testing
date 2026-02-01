@@ -1,0 +1,33 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+mkdir -p constant/triSurface
+
+cp -f \
+    ../cylinder.stl \
+    constant/triSurface/cylinder.stl
+
+runApplication surfaceTransformPoints \
+    -translate '(0 0 -0.1)' \
+    -centre '(0 0 -0.05)' \
+    -rotate-y 180 \
+    constant/triSurface/cylinder.stl \
+    constant/triSurface/cylinder.stl
+
+runApplication blockMesh
+
+# runApplication surfaceFeatureExtract
+
+runApplication snappyHexMesh -overwrite
+
+runApplication extrudeMesh
+runApplication createPatch
+
+runApplication renumberMesh -latestTime -overwrite
+runApplication checkMesh -latestTime -allGeometry
+
+runApplication postProcess -latestTime -func writeCellCentres
+
+#------------------------------------------------------------------------------
